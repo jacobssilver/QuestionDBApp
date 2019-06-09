@@ -1,6 +1,4 @@
 package com.example.QuestionDBApp.fragment;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.QuestionDBApp.AttentionActivity;
 import com.example.QuestionDBApp.ClassActivity;
 import com.example.QuestionDBApp.R;
 import com.example.QuestionDBApp.RankActivity;
 import com.example.QuestionDBApp.RankAdapter;
 import com.example.QuestionDBApp.SecondActivity;
+import com.example.QuestionDBApp.SettingActivity;
 import com.example.QuestionDBApp.User;
 
 import java.util.List;
@@ -58,6 +58,22 @@ public class FragmentMine extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RankActivity.class);
+                startActivity(intent);
+            }
+        });
+        ConstraintLayout attention = getActivity().findViewById(R.id.attention_view);
+        attention.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AttentionActivity.class);
+                startActivity(intent);
+            }
+        });
+        ConstraintLayout setting = getActivity().findViewById(R.id.set_view);
+        setting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,7 @@
 package com.example.QuestionDBApp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class ForumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<Forum> forumList;
-
+    private Context context;
     public class MyHolder extends RecyclerView.ViewHolder{
         TextView problemTitle;
         TextView problemInfo;
@@ -24,11 +26,20 @@ public class ForumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             problemTitle =  view.findViewById(R.id.problem_title);
             problemInfo = view.findViewById(R.id.problem_info);
             problemCom = view.findViewById(R.id.problem_com);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CommentActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }
-    public ForumAdapter(List<Forum> forumlist){
-        forumList = forumlist;
+    public ForumAdapter(Context context,List<Forum> forumlist){
+
+        this.forumList = forumlist;
+        this.context=context;
     }
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType){
