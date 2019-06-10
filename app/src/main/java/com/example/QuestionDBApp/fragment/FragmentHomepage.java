@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,15 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.QuestionDBApp.ClassListActivity;
 import com.example.QuestionDBApp.Exam;
 import com.example.QuestionDBApp.ExamAdapter;
 import com.example.QuestionDBApp.R;
-import com.example.QuestionDBApp.SecondActivity;
+import com.example.QuestionDBApp.User_PageActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -37,7 +42,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentHomepage extends Fragment {
-
 
     //memo
     private String[] memodata = {"距四六级考试还有20天","距期末考试还有30天","距四六级考试还有20天","距期末考试还有30天","距四六级考试还有20天","距期末考试还有30天"};
@@ -83,20 +87,98 @@ public class FragmentHomepage extends Fragment {
                 .start();
 
         //user_home
+        ImageView head = getActivity().findViewById(R.id.headimg_main);
+        TextView  name = getActivity().findViewById(R.id.user_text);
+        TextView sign = getActivity().findViewById(R.id.user_sign);
+
+        SharedPreferences share = getActivity().getSharedPreferences("Login",
+                Context.MODE_PRIVATE);
+        name.setText(share.getString("Account", ""));
+
         ConstraintLayout user = getActivity().findViewById(R.id.user_home);
         user.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SecondActivity.class);
+                Intent intent = new Intent(getActivity(), User_PageActivity.class);
                 startActivity(intent);
             }
         });
 
 
         //memo
+        ImageView memoadd = getActivity().findViewById(R.id.memo_add);
+        memoadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                final AlertDialog dialog =builder.create();
+                View dialogView = View.inflate(getContext(),R.layout.memo_edit,null);
+                builder.setTitle("添加便签");
+
+                final EditText edit = dialogView.findViewById(R.id.memoEditText);
+                Button confirm =dialogView.findViewById(R.id.confirm);
+                Button cancel = dialogView.findViewById(R.id.cancel);
+                edit.setHint("输入你想纪录的事");
+
+                dialog.setView(dialogView);
+                dialog.show();
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String context = edit.getText().toString();
+                        memoList.add(context);
+                        memoadapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
         memoadapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,memoList);
         ListView memolist = getActivity().findViewById(R.id.memoList);
         memolist.setAdapter(memoadapter);
+        memolist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                //定义AlertDialog.Builder对象，当长按列表项的时候弹出确认删除对话框
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                final AlertDialog dialog =builder.create();
+                View dialogView = View.inflate(getContext(),R.layout.memo_edit,null);
+                builder.setTitle("修改便签");
+
+                String hint = memoList.get(position).toString();
+                final EditText edit = dialogView.findViewById(R.id.memoEditText);
+                Button confirm =dialogView.findViewById(R.id.confirm);
+                Button cancel = dialogView.findViewById(R.id.cancel);
+                edit.setHint(hint);
+
+                dialog.setView(dialogView);
+                dialog.show();
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String context = edit.getText().toString();
+                        memoList.set(position,context);
+                        memoadapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        });
         memolist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -142,6 +224,15 @@ public class FragmentHomepage extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         ExamAdapter examAdapter = new ExamAdapter(getActivity(),exam_main_List);
         recyclerView.setAdapter(examAdapter);
+
+        ImageView addcollect = getActivity().findViewById(R.id.collect_add);
+        addcollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ClassListActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
     //banner 图片加载器

@@ -76,6 +76,26 @@
             app:layout_constraintTop_toBottomOf="@+id/user_home">
         </android.support.v7.widget.RecyclerView>
 
+        <!--add-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/exam_main_recycle"
+            tools:layout_editor_absoluteX="16dp">
+
+            <ImageView
+                android:id="@+id/collect_add"
+                android:src="@drawable/add"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:clickable="true"/>
+
+        </android.support.constraint.ConstraintLayout>
         <!--memo-->
         <android.support.constraint.ConstraintLayout
             android:id="@+id/memo"
@@ -83,7 +103,7 @@
             android:layout_height="200dp"
             android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@id/exam_main_recycle"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="88dp">
 
             <ImageView
                 android:id="@+id/memo_icon"
@@ -102,7 +122,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="16dp"
+                android:clickable="true"/>
             <ListView
                 android:id="@+id/memoList"
                 android:layout_width="240dp"

@@ -1,29 +1,21 @@
 package com.example.QuestionDBApp.fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.QuestionDBApp.AttentionActivity;
 import com.example.QuestionDBApp.ClassActivity;
 import com.example.QuestionDBApp.R;
 import com.example.QuestionDBApp.RankActivity;
-import com.example.QuestionDBApp.RankAdapter;
-import com.example.QuestionDBApp.SecondActivity;
+import com.example.QuestionDBApp.User_PageActivity;
 import com.example.QuestionDBApp.SettingActivity;
-import com.example.QuestionDBApp.User;
-
-import java.util.List;
+import com.example.QuestionDBApp.StaticsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,11 +37,31 @@ public class FragmentMine extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        TextView prorecord = getActivity().findViewById(R.id.problem_record);
+        TextView prowrong = getActivity().findViewById(R.id.problem_wrong);
+
+        prorecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), StaticsActivity.class);
+                startActivity(intent);
+            }
+        });
+        prowrong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ClassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         ConstraintLayout user_mine = getActivity().findViewById(R.id.user_mine);
         user_mine.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SecondActivity.class);
+                Intent intent = new Intent(getActivity(), User_PageActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,6 +70,14 @@ public class FragmentMine extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RankActivity.class);
+                startActivity(intent);
+            }
+        });
+        ConstraintLayout statics = getActivity().findViewById(R.id.statics_view);
+        statics.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), StaticsActivity.class);
                 startActivity(intent);
             }
         });

@@ -16,12 +16,13 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/back_main"
+            android:id="@+id/back_to_forum"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
-            android:src="@drawable/back"/>
+            android:src="@drawable/back"
+            android:clickable="true"/>
 
         <TextView
             android:layout_width="112dp"
@@ -34,12 +35,13 @@
             android:textSize="14sp"
             />
         <TextView
+            android:id="@+id/write_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="56dp"
             android:text="写回答"
             android:textSize="14sp"
             />

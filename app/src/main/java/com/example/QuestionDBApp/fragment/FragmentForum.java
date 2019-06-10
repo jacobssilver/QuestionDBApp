@@ -1,6 +1,7 @@
 package com.example.QuestionDBApp.fragment;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.QuestionDBApp.Forum;
@@ -39,11 +41,13 @@ public class FragmentForum extends Fragment {
 
         //prolist
         initForum();
-        RecyclerView recyclerView = getActivity().findViewById(R.id.forum_recycle);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final RecyclerView recyclerView = getActivity().findViewById(R.id.forum_recycle);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        ForumAdapter forumAdapter = new ForumAdapter(getActivity(),forumList);
+        final ForumAdapter forumAdapter = new ForumAdapter(getActivity(),forumList);
         recyclerView.setAdapter(forumAdapter);
+
+
 
         //search
         SearchView forum_search = getActivity().findViewById(R.id.forum_search);
@@ -69,7 +73,33 @@ public class FragmentForum extends Fragment {
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                final AlertDialog dialog = builder.create();
+                View dialogView = View.inflate(getContext(),R.layout.question,null);
+                dialog.setView(dialogView);
+                dialog.show();
+                final EditText title = dialogView.findViewById(R.id.question_title);
+                final EditText explain = dialogView.findViewById(R.id.question_explain);
+                Button btn_confirm = dialogView.findViewById(R.id.btn_confirm);
+                Button btn_cancel = dialogView.findViewById(R.id.btn_cancel);
 
+                btn_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String Title = title.getText().toString();
+                        String Explain = explain.getText().toString();
+                        Forum forum = new Forum(Title,Explain,"0赞0评论");
+                        forumList.add(forum);
+                        forumAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
