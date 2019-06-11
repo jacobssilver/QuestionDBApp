@@ -3,6 +3,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,13 @@ public class RankActivity extends AppCompatActivity {
         rank_recycler.setLayoutManager(layoutManager);
         RankAdapter rankAdapter = new RankAdapter(this,userList);
         rank_recycler.setAdapter(rankAdapter);
+        ImageView back = findViewById(R.id.back_main);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

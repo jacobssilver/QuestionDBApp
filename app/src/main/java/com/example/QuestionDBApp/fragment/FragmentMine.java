@@ -1,5 +1,7 @@
 package com.example.QuestionDBApp.fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -38,6 +40,10 @@ public class FragmentMine extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        SharedPreferences share = getActivity().getSharedPreferences("Login",
+                Context.MODE_PRIVATE);
+        TextView username = getActivity().findViewById(R.id.user_name);
+        username.setText(share.getString("Account", ""));
         TextView prorecord = getActivity().findViewById(R.id.problem_record);
         TextView prowrong = getActivity().findViewById(R.id.problem_wrong);
 
