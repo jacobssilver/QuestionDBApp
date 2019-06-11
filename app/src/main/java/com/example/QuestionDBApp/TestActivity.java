@@ -1,5 +1,6 @@
 package com.example.QuestionDBApp;
 
+import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.QuestionDBApp.fragment.FragmentQ1;
@@ -24,6 +27,7 @@ public class TestActivity extends AppCompatActivity {
     int i=0;
     Bundle bundle = new Bundle();
     Bundle bundles = new Bundle();
+    boolean click =true;
     //fragment
     private FragmentQ1 fragment1;
     private FragmentQ2 fragment2;
@@ -31,11 +35,20 @@ public class TestActivity extends AppCompatActivity {
     private FragmentQ4 fragment4;
     private Fragment[] fragments;
     private  int lastfragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_main);
         getSupportActionBar().hide();
+
+        initQuestionList();
+        //listnumber
+        TextView listnumber = findViewById(R.id.question_number);
+        String current = String.valueOf(i+1);
+        String total =String.valueOf(questionList.size());
+        String out = current+"/"+total;
+        listnumber.setText(out);
 
         //back
         ImageView back = findViewById(R.id.back_main);
@@ -45,7 +58,48 @@ public class TestActivity extends AppCompatActivity {
                 finish();
             }
         });
-        initQuestionList();
+
+
+        //record
+        final ImageView record = findViewById(R.id.question_record);
+
+        record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(click){
+                    record.setImageResource(R.drawable.record_click);
+                }
+                else{
+                    record.setImageResource(R.drawable.record);
+                }
+                click = !click;
+            }
+        });
+
+        //answer
+        ImageView answer = findViewById(R.id.question_answer);
+        answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(TestActivity.this);
+                final AlertDialog dialog =builder.create();
+                View dialogView = View.inflate(TestActivity.this,R.layout.alert_answer,null);
+                builder.setTitle("添加便签");
+
+                final ImageView answer = dialogView.findViewById(R.id.question_answer_img);
+                answer.setImageResource(questionList.get(i).getAnswer());
+                Button confirm =dialogView.findViewById(R.id.confirm);
+                dialog.setView(dialogView);
+                dialog.show();
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
 
         int type = questionList.get(i).getType();
         initfragment();
@@ -84,6 +138,11 @@ public class TestActivity extends AppCompatActivity {
         go_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView listnumber = findViewById(R.id.question_number);
+                String current = String.valueOf(i+1);
+                String total =String.valueOf(questionList.size());
+                String out = current+"/"+total;
+                listnumber.setText(out);
                 if(i<questionList.size()-1){
                     System.out.println("enter go");
                     i++;
@@ -113,6 +172,11 @@ public class TestActivity extends AppCompatActivity {
         back_quesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView listnumber = findViewById(R.id.question_number);
+                String current = String.valueOf(i+1);
+                String total =String.valueOf(questionList.size());
+                String out = current+"/"+total;
+                listnumber.setText(out);
                 System.out.println("enter back");
                 if(i>0){
                     i--;

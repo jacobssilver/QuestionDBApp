@@ -1,6 +1,7 @@
 package com.example.QuestionDBApp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,9 @@ public class SettingActivity extends AppCompatActivity {
                 SharedPreferences share = getSharedPreferences("Login",
                         Context.MODE_PRIVATE);
                 share.edit().putBoolean("LoginBool", false).apply();
+                Intent intent = new Intent(SettingActivity.this,
+                        LoginActivity.class);
+                startActivity(intent);
                 finish();
 
             }

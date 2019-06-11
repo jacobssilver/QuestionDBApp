@@ -63,7 +63,8 @@
             app:layout_constraintStart_toEndOf="@id/question_list"
             app:layout_constraintEnd_toStartOf="@id/question_answer"
             app:layout_constraintHorizontal_chainStyle="spread"
-            android:src="@drawable/record"/>
+            android:clickable="true"
+            android:background="@drawable/record"/>
         <ImageView
             android:id="@+id/question_answer"
             android:layout_width="24dp"
@@ -73,7 +74,8 @@
             app:layout_constraintStart_toEndOf="@id/question_record"
             app:layout_constraintEnd_toStartOf="@id/question_number"
             app:layout_constraintHorizontal_chainStyle="spread"
-            android:src="@drawable/answer"/>
+            android:src="@drawable/answer"
+            android:clickable="true"/>
         <TextView
             android:id="@+id/question_number"
             android:layout_width="wrap_content"
@@ -82,7 +84,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
-            android:text="1/20"/>
+            />
 
     </android.support.constraint.ConstraintLayout>
 

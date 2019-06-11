@@ -1,10 +1,12 @@
 package com.example.QuestionDBApp;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,6 +61,7 @@ public class LoginActivity extends Activity {
         edtAccount = (EditText) findViewById(R.id.edtaccount);
         edtPassword = (EditText) findViewById(R.id.edtpassword);
         btnLogin = (Button) findViewById(R.id.btnlogin);
+        Button btnregister = findViewById(R.id.btnregister);
 
         edtAccount.setText(strAccount);
         edtPassword.setText(strPassword);
@@ -93,6 +96,42 @@ public class LoginActivity extends Activity {
                     finish();
                 }
 
+            }
+        });
+        btnregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
+                final AlertDialog dialog =builder.create();
+                View dialogView = View.inflate(LoginActivity.this,R.layout.register_alert,null);
+
+                dialog.setView(dialogView);
+                final EditText reg_name = dialogView.findViewById(R.id.reg_account);
+                final EditText reg_password = dialogView.findViewById(R.id.reg_password);
+                final EditText regconfPassword =  dialogView.findViewById(R.id.reg_conf_password);
+                Button regconf =  dialogView.findViewById(R.id.reg_conf);
+                dialog.show();
+
+                regconf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (reg_name.getText().toString().equals("")
+                                || reg_password.getText().toString().equals("")||regconfPassword.getText().toString().equals("")) {
+                            Toast toast = Toast.makeText(LoginActivity.this,"账号或密码不能为空",Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                        if(!reg_password.getText().toString().equals(regconfPassword.getText().toString())){
+                            Toast toast = Toast.makeText(LoginActivity.this,"两次输入的密码不一致",Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                        else{
+                            dialog.dismiss();
+                        }
+
+                    }
+                });
             }
         });
     }
