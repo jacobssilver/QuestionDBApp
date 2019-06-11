@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main , fragment1).show(fragment1).commit();
         initfragment();
         lastfragment = 0;

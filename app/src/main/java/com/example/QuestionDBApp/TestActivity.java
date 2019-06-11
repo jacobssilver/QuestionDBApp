@@ -22,7 +22,8 @@ public class TestActivity extends AppCompatActivity {
 
     private List<Question> questionList = new ArrayList<>();
     int i=0;
-
+    Bundle bundle = new Bundle();
+    Bundle bundles = new Bundle();
     //fragment
     private FragmentQ1 fragment1;
     private FragmentQ2 fragment2;
@@ -49,34 +50,30 @@ public class TestActivity extends AppCompatActivity {
         int type = questionList.get(i).getType();
         initfragment();
         lastfragment=type-1;
-
+        bundle.putInt("QuestionImg",questionList.get(i).getImg());//题目传入fragment
         switch(type){
             case 1:{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment1).show(fragment1).commit();
-                Bundle bundle = new Bundle();
-                bundle.putInt("QuestionImg",questionList.get(i).getImg());//题目传入fragment
                 fragment1.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment1).show(fragment1).commit();
+
                 break;
             }
             case 2:{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment2).show(fragment2).commit();
-                Bundle bundle = new Bundle();
-                bundle.putInt("QuestionImg",questionList.get(i).getImg());//题目传入fragment
                 fragment2.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment2).show(fragment2).commit();
+
                 break;
             }
             case 3:{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment3).show(fragment3).commit();
-                Bundle bundle = new Bundle();
-                bundle.putInt("QuestionImg",questionList.get(i).getImg());//题目传入fragment
                 fragment3.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment3).show(fragment3).commit();
+
                 break;
             }
             case 4:{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment4).show(fragment4).commit();
-                Bundle bundle = new Bundle();
-                bundle.putInt("QuestionImg",questionList.get(i).getImg());//题目传入fragment
                 fragment4.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_question , fragment4).show(fragment4).commit();
+
                 break;
             }
         }
@@ -92,19 +89,18 @@ public class TestActivity extends AppCompatActivity {
                     i++;
                     int img = questionList.get(i).getImg();
                     int type = questionList.get(i).getType();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("QuestionImg",img);
+                    bundles.putInt("QuestionImg",img);
                     if(lastfragment!=type-1){
                         System.out.println("enterswitch");
+                        fragments[type-1].setArguments(bundles);
                         switchFragment(lastfragment,type-1);
-                        fragments[type].setArguments(bundle);
                         lastfragment=type-1;
                     }
                     else{
                         System.out.println("enter no_change");
-
+                        fragments[lastfragment].setArguments(bundles);
                         getSupportFragmentManager().beginTransaction().show(fragments[lastfragment]).commit();
-                        fragments[lastfragment].setArguments(bundle);
+
                     }
                 }
                 else{
@@ -123,19 +119,18 @@ public class TestActivity extends AppCompatActivity {
                     System.out.println("enter recycle");
                     int img = questionList.get(i).getImg();
                     int type = questionList.get(i).getType();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("QuestionImg",img);
+                    bundles.putInt("QuestionImg",img);
                     if(lastfragment!=type-1){
                         System.out.println("enter switch");
+                        fragments[type-1].setArguments(bundles);
                         switchFragment(lastfragment,type-1);
-                        fragments[type].setArguments(bundle);
                         lastfragment=type-1;
 
                     }
                     else{
                         System.out.println("enter back");
+                        fragments[lastfragment].setArguments(bundles);
                         getSupportFragmentManager().beginTransaction().show(fragments[lastfragment]).commit();
-                        fragments[lastfragment].setArguments(bundle);
                         System.out.println("enter no_change");
                     }
                 }

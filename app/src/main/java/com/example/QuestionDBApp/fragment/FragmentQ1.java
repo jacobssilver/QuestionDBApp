@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.QuestionDBApp.R;
 
@@ -19,13 +20,17 @@ public class FragmentQ1 extends Fragment {
     public FragmentQ1() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_1q, container, false);
+        //int img = R.drawable.img_a;
+        Bundle bundles = getArguments();
+        int img = bundles.getInt("QuestionImg",R.drawable.head_icon);
+        View view = inflater.inflate(R.layout.fragment_fragment_1q, container, false);
+        ImageView questionimg = view.findViewById(R.id.Question_img);
+        questionimg.setImageResource(img);
+        return view;
     }
 
     @Override
